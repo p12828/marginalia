@@ -45,3 +45,12 @@ jobs:
       - name: Run Valgrind
         if: ${{ !cancelled() }}
         run: make valgrind
+
+  dast:
+    name: dast
+    runs-on: ubuntu-24.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run dast
+        run: make dast
