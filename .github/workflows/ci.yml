@@ -32,3 +32,16 @@ jobs:
       - name: Run SAST
         run: make sast
 
+  tests:
+    name: tests
+    runs-on: ubuntu-24.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Valgrind
+        run: sudo apt-get update && sudo apt-get install -y valgrind
+      - name: Run sanitizers
+        run: make sanitizers
+      - name: Run Valgrind
+        if: ${{ !cancelled() }}
+        run: make valgrind
